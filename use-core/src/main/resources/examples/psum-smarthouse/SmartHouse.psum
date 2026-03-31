@@ -1,0 +1,26 @@
+psum SmartHouse
+
+agent sensor1 {
+    type = "temperature_sensor"
+}
+
+agent userA {
+    type = "human_user"
+}
+
+uncertainty u1 : attribute Room.temperature {
+    kind = Measurement
+    nature = Aleatory
+    reducibility = Irreducible
+    perspective = Objective
+    source = sensor1
+}
+
+belief b1 {
+    agent = userA
+    subject = attribute Room.doorOpen
+    kind = Content
+    nature = Epistemic
+    reducibility = PartiallyReducible
+    perspective = Subjective
+}

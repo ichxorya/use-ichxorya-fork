@@ -1,0 +1,18 @@
+model SmartHouse
+
+class Room
+attributes
+    roomName : String
+    temperature : Real
+    doorOpen : Boolean
+end
+
+class Controller
+attributes
+    systemStatus : Boolean
+end
+
+association Control between
+    Controller [1]
+    Room [1..*]
+end

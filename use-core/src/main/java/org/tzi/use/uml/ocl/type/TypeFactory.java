@@ -46,6 +46,10 @@ public final class TypeFactory {
     private static final BooleanType booleanType = new BooleanType();
     private static final OclAnyType oclAnyType = new OclAnyType();
     private static final VoidType voidType = new VoidType();
+    private static final URealType uRealType = new URealType();
+    private static final UIntegerType uIntegerType = new UIntegerType();
+    private static final UBooleanType uBooleanType = new UBooleanType();
+    private static final SBooleanType sBooleanType = new SBooleanType();
     
     static {
     	buildInTypesMap.put("Integer", integerType);
@@ -55,6 +59,10 @@ public final class TypeFactory {
     	buildInTypesMap.put("Real", realType);
     	buildInTypesMap.put("OclAny", oclAnyType);
     	buildInTypesMap.put("OclVoid", voidType);
+    	buildInTypesMap.put("UReal", uRealType);
+    	buildInTypesMap.put("UInteger", uIntegerType);
+    	buildInTypesMap.put("UBoolean", uBooleanType);
+    	buildInTypesMap.put("SBoolean", sBooleanType);
     }
     
     /**
@@ -117,6 +125,22 @@ public final class TypeFactory {
 
     public static VoidType mkVoidType() {
     	return voidType;
+    }
+
+    public static URealType mkUReal() {
+        return uRealType;
+    }
+
+    public static UIntegerType mkUInteger() {
+        return uIntegerType;
+    }
+
+    public static UBooleanType mkUBoolean() {
+        return uBooleanType;
+    }
+
+    public static SBooleanType mkSBoolean() {
+        return sBooleanType;
     }
     
     public static TupleType mkTuple(TupleType.Part[] parts) {

@@ -476,6 +476,10 @@ literal returns [ASTExpression n]
 :
       t='true'   { $n = new ASTBooleanLiteral(true); }
     | f='false'  { $n = new ASTBooleanLiteral(false); }
+    | 'UReal' LPAREN urve=additiveExpression COMMA urue=additiveExpression RPAREN { $n = new ASTURealLiteral($urve.n,$urue.n); }
+    | 'UBoolean' LPAREN ubv=additiveExpression COMMA ube=additiveExpression RPAREN { $n = new ASTUBooleanLiteral($ubv.n,$ube.n); }
+    | 'SBoolean' LPAREN sbb=additiveExpression COMMA sbd=additiveExpression COMMA sbu=additiveExpression COMMA sba=additiveExpression RPAREN { $n = new ASTSBooleanLiteral($sbb.n,$sbd.n,$sbu.n,$sba.n); }
+    | 'UInteger' LPAREN uiv=additiveExpression COMMA uiu=additiveExpression RPAREN { $n = new ASTUIntegerLiteral($uiv.n,$uiu.n); }
     | i=INT    { $n = new ASTIntegerLiteral($i); }
     | r=REAL   { $n = new ASTRealLiteral($r); }
     | s=STRING { $n = new ASTStringLiteral($s); }
@@ -626,7 +630,8 @@ typeOnly returns [ASTType n]
 */
 simpleType returns [ASTSimpleType n]
 :
-    name=IDENT { $n = new ASTSimpleType($name); }
+    name=('UReal'|'UInteger'|'UBoolean'|'UString'|'SBoolean') { $n = new ASTSimpleType($name); }
+    | name=IDENT { $n = new ASTSimpleType($name); }
     ;
 
 

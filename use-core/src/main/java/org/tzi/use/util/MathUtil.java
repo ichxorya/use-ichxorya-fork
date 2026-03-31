@@ -90,4 +90,12 @@ public class MathUtil {
 		
 		return min;
 	}
+
+	/**
+	 * Calculates the rounded number with the digits passed as argument.
+	 */
+	public static double round(double value, int digits) {
+		double exp = Math.pow(10, digits);
+		return Math.round(value * exp) / exp;
+	}
 }

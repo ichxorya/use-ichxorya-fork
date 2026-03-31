@@ -42,4 +42,5 @@ module use.core {
     exports org.tzi.use.api;
     exports org.tzi.use.main;
     exports org.tzi.use.parser.generator;
+    exports org.tzi.use.udt;
 }

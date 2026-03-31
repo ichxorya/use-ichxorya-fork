@@ -43,10 +43,27 @@ final class Op_equal extends OpGeneric {
 	}
 
 	public Type matches(Type params[]) {
-		if (params.length == 2 && params[0].getLeastCommonSupertype(params[1]) != null)
-			return TypeFactory.mkBoolean();
-		else
-			return null;
+		boolean twoArgsAndCommonSupertype = params.length == 2 && params[0].getLeastCommonSupertype(params[1]) != null;
+		boolean someOfThemIsUncertaintyValue = params[1] instanceof org.tzi.use.uml.ocl.type.UncertainType || params[0] instanceof org.tzi.use.uml.ocl.type.UncertainType;
+		boolean someOfThemIsSBooleanValue = params[1] instanceof org.tzi.use.uml.ocl.type.SBooleanType || params[0] instanceof org.tzi.use.uml.ocl.type.SBooleanType;
+		Type result = null;
+
+		if (twoArgsAndCommonSupertype) {
+			boolean someOfThemIsUndefined = params[0].isTypeOfVoidType() || params[1].isTypeOfVoidType();
+
+			if (someOfThemIsUncertaintyValue && !someOfThemIsUndefined) {
+
+				if (someOfThemIsSBooleanValue)
+					result = TypeFactory.mkSBoolean();
+				else
+					result = TypeFactory.mkUBoolean();
+			}
+			else
+				result = TypeFactory.mkBoolean();
+
+		}
+
+		return result;
 	}
 
 	@Override
@@ -64,6 +81,34 @@ final class Op_equal extends OpGeneric {
 	}
 	
 	public Value eval(EvalContext ctx, Value[] args, Type resultType) {
+		Value result = null;
+		boolean someOfThemIsUndefined = args[1].isUndefined() || args[0].isUndefined();
+
+		if ((args[1] instanceof org.tzi.use.uml.ocl.value.UncertainValue || args[0] instanceof org.tzi.use.uml.ocl.value.UncertainValue) && !someOfThemIsUndefined)
+			result = evalUncertainBooleanResult(args);
+		else
+			result = evalBooleanResult(args);
+
+		return result;
+	}
+
+	private org.tzi.use.uml.ocl.value.UncertainBooleanValue evalUncertainBooleanResult(Value [] args) {
+		org.tzi.use.uml.ocl.value.UncertainValue value;
+		int index_other;
+
+		if (args[0] instanceof org.tzi.use.uml.ocl.value.UncertainValue) {
+			value = (org.tzi.use.uml.ocl.value.UncertainValue) args[0];
+			index_other = 1;
+		}
+		else {
+			value = (org.tzi.use.uml.ocl.value.UncertainValue) args[1];
+			index_other = 0;
+		}
+
+		return value.uEquals(args[index_other]);
+	}
+
+	private BooleanValue evalBooleanResult(Value[] args) {
 		boolean res;
 
 		if (args[0].isUndefined())
@@ -97,16 +142,60 @@ final class Op_notequal extends OpGeneric {
 	}
 
 	public Type matches(Type params[]) {
-		if (params.length == 2 && params[0].getLeastCommonSupertype(params[1]) != null)
-			return TypeFactory.mkBoolean();
-		else
-			return null;
+		boolean twoArgsAndCommonSupertype = params.length == 2 && params[0].getLeastCommonSupertype(params[1]) != null;
+		boolean someOfThemIsUncertaintyValue = params[1] instanceof org.tzi.use.uml.ocl.type.UncertainType || params[0] instanceof org.tzi.use.uml.ocl.type.UncertainType;
+		boolean someOfThemIsSBooleanValue = params[1] instanceof org.tzi.use.uml.ocl.type.SBooleanType || params[0] instanceof org.tzi.use.uml.ocl.type.SBooleanType;
+		Type result = null;
+
+		if (twoArgsAndCommonSupertype) {
+			boolean someOfThemIsUndefined = params[0].isTypeOfVoidType() || params[1].isTypeOfVoidType();
+
+			if (someOfThemIsUncertaintyValue && !someOfThemIsUndefined) {
+
+				if (someOfThemIsSBooleanValue)
+					result = TypeFactory.mkSBoolean();
+				else
+					result = TypeFactory.mkUBoolean();
+			}
+			else
+				result = TypeFactory.mkBoolean();
+		}
+
+		return result;
 	}
 
 	public Value eval(EvalContext ctx, Value[] args, Type resultType) {
+		Value result = null;
+		boolean someOfThemIsUndefined = args[1].isUndefined() || args[0].isUndefined();
+
+		if ((args[1] instanceof org.tzi.use.uml.ocl.value.UncertainValue || args[0] instanceof org.tzi.use.uml.ocl.value.UncertainValue) && !someOfThemIsUndefined)
+			result = evalUncertainBooleanResult(args);
+		else
+			result = evalBooleanResult(args);
+
+		return result;
+	}
+
+	private org.tzi.use.uml.ocl.value.UncertainBooleanValue evalUncertainBooleanResult(Value [] args) {
+		org.tzi.use.uml.ocl.value.UncertainValue value;
+		int index_other;
+
+		if (args[0] instanceof org.tzi.use.uml.ocl.value.UncertainValue) {
+			value = (org.tzi.use.uml.ocl.value.UncertainValue) args[0];
+			index_other = 1;
+		}
+		else {
+			value = (org.tzi.use.uml.ocl.value.UncertainValue) args[1];
+			index_other = 0;
+		}
+
+		return value.uDistinct(args[index_other]);
+	}
+
+	private BooleanValue evalBooleanResult(Value[] args) {
 		if (args[0].isUndefined())
 			return BooleanValue.get(!args[1].isUndefined());
-		
+
 		boolean res = !args[0].equals(args[1]);
 		return BooleanValue.get(res);
 	}

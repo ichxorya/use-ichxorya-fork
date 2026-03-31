@@ -93,6 +93,11 @@ public abstract class Value implements Comparable<Value>, BufferedToString {
         return false;
     }
 
+    public boolean isUReal() { return false; }
+    public boolean isUInteger() { return false; }
+    public boolean isUBoolean() { return false; }
+    public boolean isSBoolean() { return false; }
+
     /**
      * True if value is an instance of <code>{@link CollectionValue}</code> 
      * @return True if value is an instance of <code>{@link CollectionValue}</code>

@@ -89,6 +89,12 @@ public abstract class OpGeneric {
 		StandardOperationsString.registerTypeOperations(opmap);
 		StandardOperationsBoolean.registerTypeOperations(opmap);
 		
+		// PSUM Uncertainty types
+		StandardOperationsUInteger.registerTypeOperations(opmap);
+		StandardOperationsUReal.registerTypeOperations(opmap);
+		StandardOperationsSBoolean.registerTypeOperations(opmap);
+		StandardOperationsUBoolean.registerTypeOperations(opmap);
+		
 		// Collections
 		StandardOperationsCollection.registerTypeOperations(opmap);
 		StandardOperationsSet.registerTypeOperations(opmap);

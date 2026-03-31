@@ -74,4 +74,10 @@ public interface ExpressionVisitor {
 	void visitExpSelectByType(ExpSelectByType exp);
 	void visitRange(ExpRange exp);
 	void visitNavigationClassifierSource(ExpNavigationClassifierSource exp);
+	
+	// PSUM Uncertainty literal visitors
+	default void visitConstUReal(ExpConstUReal exp) {}
+	default void visitConstUInteger(ExpConstUInteger exp) {}
+	default void visitConstUBoolean(ExpConstUBoolean exp) {}
+	default void visitConstSBoolean(ExpConstSBoolean exp) {}
 }

@@ -151,5 +151,15 @@ public interface Type extends BufferedToString {
     
     boolean isTypeOfVoidType();
     
+    // Uncertainty type predicates
+    default boolean isTypeOfUReal() { return false; }
+    default boolean isKindOfUReal(VoidHandling h) { return false; }
+    default boolean isTypeOfUInteger() { return false; }
+    default boolean isKindOfUInteger(VoidHandling h) { return false; }
+    default boolean isTypeOfUBoolean() { return false; }
+    default boolean isKindOfUBoolean(VoidHandling h) { return false; }
+    default boolean isTypeOfSBoolean() { return false; }
+    default boolean isKindOfSBoolean(VoidHandling h) { return false; }
+    
     boolean isInstantiableCollection();
 }
